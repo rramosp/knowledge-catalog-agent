@@ -1,0 +1,32 @@
+{
+  "eval_cases": [
+    {
+      "eval_case_id": "search_data_assets",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "Search the GCP Knowledge Catalog for all tables and datasets in project genai-dev-454121."}]
+      }
+    },
+    {
+      "eval_case_id": "inspect_schema_metadata",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "Show the metadata, columns, and data types for the transactions_prod table."}]
+      }
+    },
+    {
+      "eval_case_id": "attach_governance_tag",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "Attach the Data Governance tag to customer_profiles table with classification=Confidential and data_owner=security@google.com."}]
+      }
+    },
+    {
+      "eval_case_id": "mcp_server_query",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "Use the Knowledge Catalog MCP server to query all available entry groups."}]
+      }
+    }
+  ]
+}

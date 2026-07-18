@@ -1,0 +1,3 @@
+[Transcript 2026-07-10 14:00] User: Elena Rostova. "The Knowledge Catalog data discovery agent makes finding BigQuery tables incredibly fast."
+[Transcript 2026-07-11 09:30] User: Marcus Chen. "We successfully attached the Data Governance tag with retention_days=2555 to our production financial data."
+[Transcript 2026-07-12 16:45] User: Sophia Mansoor. "Automatic schema extraction for Vertex AI and Dataplex streams saved our compliance team days of manual audit."

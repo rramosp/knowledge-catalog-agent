@@ -1,0 +1,128 @@
+{
+  "datasets": [
+    {
+      "dataset_id": "finance_db",
+      "description": "Production financial datasets, transaction logs, and billing ledgers.",
+      "tables": [
+        {
+          "table_id": "transactions_prod",
+          "data_file": "bigquery/financial_transactions.json",
+          "description": "Production financial transaction logs containing payment amounts, merchant info, and masked credit cards.",
+          "tags": [
+            {
+              "template_id": "data_governance",
+              "fields": {
+                "classification": "Confidential",
+                "data_owner": "finance-security@example.com",
+                "contains_pii": true,
+                "retention_days": 2555
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dataset_id": "crm_analytics",
+      "description": "Customer Relationship Management data and user profiles.",
+      "tables": [
+        {
+          "table_id": "customer_profiles",
+          "data_file": "bigquery/customer_profiles.json",
+          "description": "Consolidated customer demographics, emails, loyalty status, and communication preferences.",
+          "tags": [
+            {
+              "template_id": "privacy_compliance",
+              "fields": {
+                "gdpr_regulated": true,
+                "ccpa_regulated": true,
+                "pii_type": "Direct Identifier (Email, Name)",
+                "compliance_contact": "privacy-officer@example.com"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dataset_id": "inventory",
+      "description": "Master product catalog and warehouse inventory levels.",
+      "tables": [
+        {
+          "table_id": "product_catalog",
+          "data_file": "bigquery/product_catalog.json",
+          "description": "E-commerce master product catalog, inventory levels, warehouse locations, and SKU metadata.",
+          "tags": [
+            {
+              "template_id": "data_governance",
+              "fields": {
+                "classification": "Public",
+                "data_owner": "inventory-mgmt@example.com",
+                "contains_pii": false,
+                "retention_days": 365
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "storage_buckets": [
+    {
+      "bucket_suffix": "knowledge-catalog-demo-docs",
+      "files": [
+        "cloud_storage/customer_feedback_transcripts.txt",
+        "cloud_storage/governance_policy.txt"
+      ]
+    }
+  ],
+  "vertex_ai_resources": [
+    {
+      "resource_type": "DATASET",
+      "display_name": "ml_feature_store",
+      "system": "DATAPLEX",
+      "description": "Real-time user embedding vectors and inference features for recommendation models.",
+      "tags": [
+        {
+          "template_id": "ai_governance",
+          "fields": {
+            "model_readiness": "Production-Ready",
+            "fairness_audited": true,
+            "pipeline_owner": "mlops-team@example.com"
+          }
+        }
+      ]
+    }
+  ],
+  "tag_templates": [
+    {
+      "template_id": "data_governance",
+      "display_name": "Data Governance",
+      "fields": [
+        {"id": "classification", "type": "ENUM", "values": ["Public", "Internal", "Confidential", "Restricted"]},
+        {"id": "data_owner", "type": "STRING"},
+        {"id": "contains_pii", "type": "BOOL"},
+        {"id": "retention_days", "type": "DOUBLE"}
+      ]
+    },
+    {
+      "template_id": "privacy_compliance",
+      "display_name": "Privacy Compliance",
+      "fields": [
+        {"id": "gdpr_regulated", "type": "BOOL"},
+        {"id": "ccpa_regulated", "type": "BOOL"},
+        {"id": "pii_type", "type": "STRING"},
+        {"id": "compliance_contact", "type": "STRING"}
+      ]
+    },
+    {
+      "template_id": "ai_governance",
+      "display_name": "AI Governance",
+      "fields": [
+        {"id": "model_readiness", "type": "ENUM", "values": ["Experimental", "Staging", "Production-Ready"]},
+        {"id": "fairness_audited", "type": "BOOL"},
+        {"id": "pipeline_owner", "type": "STRING"}
+      ]
+    }
+  ]
+}

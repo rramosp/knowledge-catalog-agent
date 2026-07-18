@@ -1,0 +1,29 @@
+[
+  {
+    "customer_id": "cust-501",
+    "full_name": "Elena Rostova",
+    "email": "elena.rostova@example.com",
+    "phone": "+1-555-019-2834",
+    "loyalty_tier": "Platinum",
+    "country": "US",
+    "signup_date": "2024-03-12"
+  },
+  {
+    "customer_id": "cust-502",
+    "full_name": "Marcus Chen",
+    "email": "marcus.chen@example.org",
+    "phone": "+1-555-014-9981",
+    "loyalty_tier": "Gold",
+    "country": "CA",
+    "signup_date": "2024-08-25"
+  },
+  {
+    "customer_id": "cust-503",
+    "full_name": "Sophia Al-Mansoor",
+    "email": "sophia.mansoor@example.net",
+    "phone": "+44-20-7946-0912",
+    "loyalty_tier": "Silver",
+    "country": "UK",
+    "signup_date": "2025-01-10"
+  }
+]

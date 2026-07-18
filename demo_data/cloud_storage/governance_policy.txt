@@ -1,0 +1,5 @@
+GCP DATA GOVERNANCE & PRIVACY COMPLIANCE POLICY (2026)
+------------------------------------------------------
+1. All datasets containing PII (Direct Identifiers: Name, Email, Card Numbers) must be tagged with template 'Privacy Compliance'.
+2. Production financial transaction tables must maintain classification='Confidential' and retention_days=2555 (7 years).
+3. Vertex AI Model Feature Stores and Dataplex Data Streams must be tagged with template 'AI Governance' prior to model deployment.

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GCP Knowledge Catalog Agent - Interactive AI Assistant for Data Discovery, Metadata Inspection, Governance Tagging, and Remote MCP Integration in Gemini Enterprise.">
+  <title>GCP Knowledge Catalog Agent | Gemini Enterprise Assistant</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="dark-theme">
+  <div class="background-glow glow-1"></div>
+  <div class="background-glow glow-2"></div>
+  <div class="background-glow glow-3"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="main-sidebar">
+      <div class="brand-container">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#brand-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17L12 22L22 17" stroke="url(#brand-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12L12 17L22 12" stroke="url(#brand-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="brand-grad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#38BDF8"/>
+                <stop offset="1" stop-color="#818CF8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h2>Knowledge Catalog</h2>
+          <span class="badge gemini-badge">Gemini Agent</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <button class="nav-item active" id="nav-chat" onclick="switchTab('chat')">
+          <span class="nav-icon">💬</span>
+          <span class="nav-label">Live Agent Chat</span>
+        </button>
+        <button class="nav-item" id="nav-explorer" onclick="switchTab('explorer')">
+          <span class="nav-icon">🔍</span>
+          <span class="nav-label">Asset Explorer</span>
+        </button>
+        <button class="nav-item" id="nav-schema" onclick="switchTab('schema')">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Metadata & Schema</span>
+        </button>
+        <button class="nav-item" id="nav-tags" onclick="switchTab('tags')">
+          <span class="nav-icon">🏷️</span>
+          <span class="nav-label">Tag Management</span>
+        </button>
+        <button class="nav-item" id="nav-mcp" onclick="switchTab('mcp')">
+          <span class="nav-icon">⚡</span>
+          <span class="nav-label">Remote MCP Hub</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-card" id="connection-status-card">
+          <div class="status-header">
+            <span class="status-pulse-dot"></span>
+            <span class="status-title">System Status</span>
+          </div>
+          <div class="status-rows">
+            <div class="status-row">
+              <span class="label">Knowledge Catalog API:</span>
+              <span class="value text-success" id="api-status">Connected</span>
+            </div>
+            <div class="status-row">
+              <span class="label">Remote MCP Server:</span>
+              <span class="value text-accent" id="mcp-status">Active (SSE)</span>
+            </div>
+            <div class="status-row">
+              <span class="label">Project:</span>
+              <span class="value text-muted" id="active-project-id">genai-dev-454121</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="main-panel">
+      <!-- Top App Bar -->
+      <header class="top-bar">
+        <div class="page-header-info">
+          <h1 id="page-title">Live Agent Chat</h1>
+          <p id="page-description">Interact with the GCP Knowledge Catalog AI Agent deployed for Gemini Enterprise.</p>
+        </div>
+        <div class="top-bar-actions">
+          <div class="environment-pill">
+            <span class="env-dot"></span>
+            <span>Gemini Enterprise App</span>
+          </div>
+          <button class="btn btn-secondary" id="btn-quick-refresh" onclick="refreshCatalogData()" title="Sync with GCP Knowledge Catalog">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            Sync Catalog
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 1: LIVE AGENT CHAT -->
+      <section class="tab-pane active" id="pane-chat">
+        <div class="chat-container">
+          <div class="chat-messages" id="chat-messages-box">
+            <div class="message system-message">
+              <div class="avatar agent-avatar">✨</div>
+              <div class="message-content">
+                <div class="message-header">
+                  <strong>Knowledge Catalog Agent</strong>
+                  <span class="timestamp">Just now</span>
+                </div>
+                <div class="message-body">
+                  <p>Hello! I am your <strong>GCP Knowledge Catalog & Governance Agent</strong>. I can help you search data assets across GCP projects, inspect table schemas & classifications, attach or update governance tags, and run MCP tool queries.</p>
+                  <p>How can I assist you with your data catalog today?</p>
+                </div>
+                <div class="quick-prompts">
+                  <button class="prompt-pill" onclick="sendPrompt('Find all BigQuery tables in the project and show their classifications')">🔍 Find all tables & classifications</button>
+                  <button class="prompt-pill" onclick="sendPrompt('Show metadata and schema for transactions_prod table')">📊 Inspect transactions_prod schema</button>
+                  <button class="prompt-pill" onclick="sendPrompt('Attach Data Governance tag to customer_profiles with classification=Confidential and data_owner=security@google.com')">🏷️ Attach Confidential tag</button>
+                  <button class="prompt-pill" onclick="sendPrompt('Use the Knowledge Catalog MCP server to list all Dataplex lakes and entry groups')">⚡ Query via Remote MCP</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Input Area -->
+          <div class="chat-input-wrapper">
+            <form class="chat-form" id="chat-form" onsubmit="handleChatSubmit(event)">
+              <textarea 
+                id="chat-input-text" 
+                placeholder="Ask the Knowledge Catalog agent (e.g. 'Search for PII datasets in project' or 'Update tag on orders table')..." 
+                rows="1"
+                onkeydown="handleTextareaKey(event)"
+                required
+              ></textarea>
+              <button type="submit" class="btn btn-primary" id="btn-send-message">
+                <span>Send</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: ASSET EXPLORER -->
+      <section class="tab-pane" id="pane-explorer">
+        <div class="explorer-toolbar">
+          <div class="search-input-group">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="explorer-search-input" placeholder="Search datasets, tables, columns, tags (e.g., 'type=table', 'Confidential', 'pii')..." oninput="handleExplorerSearch()">
+          </div>
+          <div class="filter-group">
+            <select id="filter-asset-type" onchange="handleExplorerSearch()">
+              <option value="ALL">All Asset Types</option>
+              <option value="TABLE">Tables</option>
+              <option value="DATASET">Datasets</option>
+              <option value="DATA_STREAM">Dataplex Streams</option>
+            </select>
+            <select id="filter-system" onchange="handleExplorerSearch()">
+              <option value="ALL">All Systems</option>
+              <option value="BIGQUERY">BigQuery</option>
+              <option value="DATAPLEX">Dataplex</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="asset-grid" id="asset-results-container">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </section>
+
+      <!-- TAB 3: METADATA & SCHEMA VIEWER -->
+      <section class="tab-pane" id="pane-schema">
+        <div class="schema-layout">
+          <div class="schema-selector-card">
+            <h3>Select Data Asset</h3>
+            <p class="text-sm text-muted">Pick a catalog entry to inspect column definitions, data types, and governance annotations.</p>
+            <select id="schema-asset-select" class="form-control" onchange="loadAssetSchema()">
+              <!-- Populated dynamically -->
+            </select>
+            <div class="asset-meta-summary" id="asset-meta-summary-box">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+          <div class="schema-table-card">
+            <div class="card-header-flex">
+              <h3>Schema Columns & Data Types</h3>
+              <span class="badge" id="schema-column-count">5 Columns</span>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table" id="schema-columns-table">
+                <thead>
+                  <tr>
+                    <th>Column Name</th>
+                    <th>Type</th>
+                    <th>Mode</th>
+                    <th>Description</th>
+                    <th>Tags / Classifications</th>
+                  </tr>
+                </thead>
+                <tbody id="schema-columns-tbody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: TAG MANAGEMENT STUDIO -->
+      <section class="tab-pane" id="pane-tags">
+        <div class="tags-studio-layout">
+          <!-- Tag Creation / Update Form -->
+          <div class="tag-form-card">
+            <h3>🏷️ Attach / Update Governance Tag</h3>
+            <p class="text-sm text-muted">Apply or modify classification tag templates on GCP Knowledge Catalog assets.</p>
+            
+            <form id="tag-manage-form" onsubmit="handleTagFormSubmit(event)">
+              <div class="form-group">
+                <label for="tag-target-asset">Target Data Asset</label>
+                <select id="tag-target-asset" class="form-control" required>
+                  <!-- Populated dynamically -->
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="tag-template-name">Tag Template</label>
+                <select id="tag-template-name" class="form-control" onchange="updateTagTemplateFields()" required>
+                  <option value="Data Governance">Data Governance</option>
+                  <option value="Privacy Compliance">Privacy Compliance</option>
+                  <option value="AI Governance">AI Governance</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="tag-target-column">Scope / Column (Optional)</label>
+                <input type="text" id="tag-target-column" class="form-control" placeholder="Leave empty for Table/Dataset level">
+              </div>
+
+              <div id="dynamic-tag-fields-container">
+                <!-- Populated dynamically based on selected template -->
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block" id="btn-submit-tag">
+                <span>Save & Attach Tag to Catalog</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Active Catalog Tags List -->
+          <div class="active-tags-card">
+            <div class="card-header-flex">
+              <h3>Active Governance Tags</h3>
+              <span class="badge badge-accent">Live Catalog Sync</span>
+            </div>
+            <div class="tags-list-container" id="active-tags-container">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: REMOTE MCP HUB -->
+      <section class="tab-pane" id="pane-mcp">
+        <div class="mcp-hub-layout">
+          <div class="mcp-status-banner">
+            <div class="mcp-icon-large">⚡</div>
+            <div class="mcp-banner-details">
+              <h2>Knowledge Catalog Remote MCP Server</h2>
+              <p>Model Context Protocol (MCP) server endpoint providing standardized tool access for Gemini Enterprise and AI agents.</p>
+              <div class="mcp-endpoints-grid">
+                <div class="mcp-stat-box">
+                  <span class="label">Protocol Version</span>
+                  <span class="val">MCP/1.0</span>
+                </div>
+                <div class="mcp-stat-box">
+                  <span class="label">Transport</span>
+                  <span class="val">SSE & Streamable HTTP</span>
+                </div>
+                <div class="mcp-stat-box">
+                  <span class="label">Active Server Endpoint</span>
+                  <span class="val text-accent">https://knowledge-catalog-mcp.googleapis.com/v1/sse</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mcp-tools-grid">
+            <div class="mcp-tool-card">
+              <div class="tool-badge">MCP Tool</div>
+              <h4>search_data_assets</h4>
+              <p>Executes semantic and keyword search across Dataplex lakes and BigQuery entries in GCP projects.</p>
+              <button class="btn btn-sm btn-outline" onclick="runMcpTester('search_data_assets', {query: 'transactions'})">Test Tool</button>
+            </div>
+            <div class="mcp-tool-card">
+              <div class="tool-badge">MCP Tool</div>
+              <h4>get_asset_schema</h4>
+              <p>Fetches full column definitions, modes, and technical metadata for a specified catalog resource.</p>
+              <button class="btn btn-sm btn-outline" onclick="runMcpTester('get_asset_schema', {entry_name: 'transactions_prod'})">Test Tool</button>
+            </div>
+            <div class="mcp-tool-card">
+              <div class="tool-badge">MCP Tool</div>
+              <h4>manage_governance_tags</h4>
+              <p>Creates or updates governance tag templates and applies field values to tables and columns.</p>
+              <button class="btn btn-sm btn-outline" onclick="runMcpTester('manage_governance_tags', {entry_name: 'customer_profiles', tag_template: 'Privacy Compliance', fields: {gdpr_regulated: true}})">Test Tool</button>
+            </div>
+            <div class="mcp-tool-card">
+              <div class="tool-badge">MCP Tool</div>
+              <h4>list_dataplex_lakes</h4>
+              <p>Discovers and lists all Dataplex entry groups, data zones, and lake assets in the target project.</p>
+              <button class="btn btn-sm btn-outline" onclick="runMcpTester('list_dataplex_lakes', {})">Test Tool</button>
+            </div>
+          </div>
+
+          <div class="mcp-response-viewer">
+            <div class="card-header-flex">
+              <h4>MCP Server Console & Response Payload</h4>
+              <span class="badge" id="mcp-console-status">Ready</span>
+            </div>
+            <pre class="json-code-block" id="mcp-json-output">// Click 'Test Tool' above or invoke MCP via Live Chat to see raw MCP JSON-RPC payloads here...</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

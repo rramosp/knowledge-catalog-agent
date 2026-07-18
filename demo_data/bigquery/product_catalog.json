@@ -1,0 +1,26 @@
+[
+  {
+    "sku": "SKU-99201",
+    "title": "Enterprise Cloud Database Optimizer",
+    "category": "Software & AI Tools",
+    "unit_price": 499.00,
+    "inventory_count": 9500,
+    "warehouse_location": "us-central1-gcp"
+  },
+  {
+    "sku": "SKU-10492",
+    "title": "Vertex AI LLM Inference Gateway",
+    "category": "Cloud Infrastructure",
+    "unit_price": 1200.00,
+    "inventory_count": 4200,
+    "warehouse_location": "us-east1-gcp"
+  },
+  {
+    "sku": "SKU-33019",
+    "title": "Knowledge Catalog Data Governance Shield",
+    "category": "Security & Compliance",
+    "unit_price": 750.00,
+    "inventory_count": 18000,
+    "warehouse_location": "europe-west1-gcp"
+  }
+]

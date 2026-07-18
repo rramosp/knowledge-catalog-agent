@@ -1,0 +1,32 @@
+[
+  {
+    "transaction_id": "tx-8890123-a",
+    "customer_id": "cust-501",
+    "amount": 1250.75,
+    "currency": "USD",
+    "card_number_masked": "XXXX-XXXX-XXXX-4491",
+    "status": "COMPLETED",
+    "merchant": "Cloud Supermarket",
+    "created_at": "2026-07-15 10:22:45 UTC"
+  },
+  {
+    "transaction_id": "tx-8890124-b",
+    "customer_id": "cust-502",
+    "amount": 89.99,
+    "currency": "USD",
+    "card_number_masked": "XXXX-XXXX-XXXX-1120",
+    "status": "COMPLETED",
+    "merchant": "Vertex AI Streaming",
+    "created_at": "2026-07-16 14:10:02 UTC"
+  },
+  {
+    "transaction_id": "tx-8890125-c",
+    "customer_id": "cust-503",
+    "amount": 4500.00,
+    "currency": "USD",
+    "card_number_masked": "XXXX-XXXX-XXXX-9903",
+    "status": "FLAGGED_REVIEW",
+    "merchant": "Global Electronics Corp",
+    "created_at": "2026-07-17 18:45:19 UTC"
+  }
+]
